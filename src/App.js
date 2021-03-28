@@ -3,6 +3,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 import { blue } from '@material-ui/core/colors'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Routes from './routes'
+import { Provider } from 'react-redux'
+import { store } from './store/store'
 
 const theme = createMuiTheme({
   palette: {
@@ -26,8 +28,10 @@ const theme = createMuiTheme({
 
 export default function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Routes />
-    </ThemeProvider >
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Routes />
+      </ThemeProvider >
+    </Provider>
   )
 }
