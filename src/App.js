@@ -2,6 +2,7 @@ import React from 'react'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 import { blue } from '@material-ui/core/colors'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Routes from './routes'
 
 const theme = createMuiTheme({
   palette: {
@@ -26,7 +27,7 @@ const theme = createMuiTheme({
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <h1 className="text-danger">React</h1>
+      <Routes />
     </ThemeProvider >
   )
 }
