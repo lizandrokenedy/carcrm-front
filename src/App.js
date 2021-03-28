@@ -1,7 +1,7 @@
-import { Button, createMuiTheme, TextField, ThemeProvider } from '@material-ui/core'
-import { blue } from '@material-ui/core/colors'
 import React from 'react'
-
+import { createMuiTheme, ThemeProvider } from '@material-ui/core'
+import { blue } from '@material-ui/core/colors'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const theme = createMuiTheme({
   palette: {
@@ -26,12 +26,7 @@ const theme = createMuiTheme({
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <TextField id="standard-basic" label="Standard" />
-        <Button variant="contained" color="primary">
-          Primary
-      </Button>
-      </div>
+      <h1 className="text-danger">React</h1>
     </ThemeProvider >
   )
 }
