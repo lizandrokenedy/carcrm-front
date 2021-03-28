@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { Button, createMuiTheme, TextField, ThemeProvider } from '@material-ui/core'
+import { blue } from '@material-ui/core/colors'
+import React from 'react'
 
-function App() {
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: blue[500],
+    },
+  },
+
+  props: {
+    MuiTextField: {
+      variant: 'outlined',
+      fullWidth: true
+    },
+    MuiSelect: {
+      variant: 'outlined',
+      fullWidth: true
+    }
+  }
+})
+
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider theme={theme}>
+      <div>
+        <TextField id="standard-basic" label="Standard" />
+        <Button variant="contained" color="primary">
+          Primary
+      </Button>
+      </div>
+    </ThemeProvider >
+  )
 }
-
-export default App;
