@@ -7,7 +7,6 @@ const initialState = {
 
 const loadingReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-
         case actionTypes.CHANGE:
             return { ...state, ...payload }
 
