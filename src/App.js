@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Routes from './routes'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
-import { Loading } from './view/components'
+import { Loading, Notify } from './view/components'
 import './global.css'
 
 const theme = createMuiTheme({
@@ -33,6 +33,7 @@ export default function App() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Loading />
+        <Notify />
         <Routes />
       </ThemeProvider >
     </Provider>
