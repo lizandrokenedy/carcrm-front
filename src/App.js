@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Routes from './routes'
 import { Provider } from 'react-redux'
 import { store } from './store/store'
+import { Loading } from './view/components'
+import './global.css'
 
 const theme = createMuiTheme({
   palette: {
@@ -30,6 +32,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
+        <Loading />
         <Routes />
       </ThemeProvider >
     </Provider>
