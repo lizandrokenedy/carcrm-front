@@ -1,16 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { FaCar, FaCreditCard, FaLaptop, FaSignOutAlt, FaUsers, FaWhatsapp } from 'react-icons/fa'
-import { MenuItem, MenuList } from '@material-ui/core'
+import { FaAngleDown, FaAngleUp, FaCar, FaCreditCard, FaLaptop, FaSignOutAlt, FaUsers, FaWhatsapp } from 'react-icons/fa'
+import { AppBar, Collapse, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, MenuItem, MenuList, Toolbar, Typography } from '@material-ui/core'
+import { MdMenu } from 'react-icons/md'
 
-export default function Header() {
+export default function Header(props) {
+
+    const [state, setState] = useState({
+        open: false
+    });
+
+    const [collapse, setCollapse] = useState({
+        site: false,
+        financeiro: false
+    });
+
     return (
         <>
             {(window.innerWidth < 577) ?
 
-                <div>
-
-                </div>
+                <AppBar position="fixed">
+                    <Toolbar>
+                        <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setState({ open: true })}>
+                            <MdMenu />
+                        </IconButton>
+                        <Typography variant="h6">
+                            {props.title}
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
 
                 :
 
@@ -87,6 +105,104 @@ export default function Header() {
                 </nav>
 
             }
+
+            <Drawer anchor="left" open={state.open} onClose={() => setState({ open: false })}>
+                <div style={{ width: 320, maxWidth: window.innerWidth - 70 }}>
+                    <List component="nav" className="menu-mobile">
+                        <ListItem>
+                            <img className="img-fluid logo-mobile" src="/logo.png" alt="CAR CRM" height="40" />
+                        </ListItem>
+
+                        <ListItem>
+                            teste@gmail.com
+                        </ListItem>
+
+                        <Divider className="mt-2 mb-3" />
+
+                        <ListItem>
+                            <ListItemIcon>
+                                <FaCar size={22} color="#444" />
+                            </ListItemIcon>
+                            <ListItemText primary="Veiculos" />
+                        </ListItem>
+
+                        <ListItem>
+                            <ListItemIcon>
+                                <FaUsers size={22} color="#444" />
+                            </ListItemIcon>
+                            <ListItemText primary="Proprietários" />
+                        </ListItem>
+
+                        <ListItem button onClick={() => setCollapse({ ...collapse, site: !collapse.site })}>
+                            <ListItemIcon>
+                                <FaLaptop size={22} color="#444" />
+                            </ListItemIcon>
+                            <ListItemText primary="Site" />
+                            {(collapse.site) ? <FaAngleUp /> : <FaAngleDown />}
+                        </ListItem>
+
+                        <Collapse in={collapse.site} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                <ListItem>
+                                    <ListItemText className="pl-5" primary="Otimização para o Google" />
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText className="pl-5" primary="Unidades e Telefones" />
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText className="pl-5" primary="Minha Logo" />
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText className="pl-5" primary="Dominio" />
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText className="pl-5" primary="Configurações" />
+                                </ListItem>
+                            </List>
+                        </Collapse>
+
+                        <Divider className="mt-2 mb-3" />
+
+                        <ListItem button onClick={() => setCollapse({ ...collapse, financeiro: !collapse.financeiro })}>
+                            <ListItemIcon>
+                                <FaCreditCard size={22} color="#444" />
+                            </ListItemIcon>
+                            <ListItemText primary="Financeiro" />
+                            {(collapse.financeiro) ? <FaAngleUp /> : <FaAngleDown />}
+                        </ListItem>
+
+                        <Collapse in={collapse.financeiro} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                <ListItem>
+                                    <ListItemText className="pl-5" primary="Meu Plano" />
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemText className="pl-5" primary="Minhas Transações" />
+                                </ListItem>
+                            </List>
+                        </Collapse>
+
+
+                        <ListItem>
+                            <ListItemIcon>
+                                <FaWhatsapp size={22} color="#444" />
+                            </ListItemIcon>
+                            <ListItemText primary="Ajuda" />
+                        </ListItem>
+
+                        <Divider className="mt-2 mb-3" />
+
+                        <ListItem>
+                            <ListItemIcon>
+                                <FaSignOutAlt size={22} color="#444" />
+                            </ListItemIcon>
+                            <ListItemText primary="Sair" />
+                        </ListItem>
+
+                    </List>
+                </div>
+            </Drawer>
+
         </>
     )
 }
