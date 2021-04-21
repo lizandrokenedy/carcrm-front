@@ -2,6 +2,17 @@
     outline: none !important;
 }
 
+body {
+    background-color: #eee;
+}
+
+.card {
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(153,153,153,0.2) 0px 2px 4px 0px;
+    border-radius: 3px;
+    border: none;
+}
+
 a, a:hover {
     text-decoration: none !important;
 }
@@ -45,4 +56,10 @@ a, a:hover {
 .menu-mobile .MuiListItemText-primary {
     font-weight: 600;
     color: #444;
+}
+
+.label-custom {
+    color: #2c2c32;
+    font-weight: 600;
+    font-family: 'Open Sans', sans-serif;
 }

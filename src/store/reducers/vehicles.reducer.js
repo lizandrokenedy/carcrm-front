@@ -30,7 +30,7 @@ const vehiclesReducer = (state = initialState, { type, payload, isLoadMore }) =>
         case actionTypes.CHANGE:
             return {
                 ...state,
-                vehicles: {
+                vehicle: {
                     ...state.vehicle,
                     ...payload
                 }
