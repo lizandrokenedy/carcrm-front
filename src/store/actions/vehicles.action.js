@@ -85,3 +85,60 @@ export const destroy = (id) => dispatch => {
         })
 }
 
+export const brand = (vehicle_type) => dispatch => {
+    dispatch(changeLoading({
+        open: true
+    }))
+
+    return HttpAuth.get(`vehicles/${vehicle_type}/brand`)
+        .then(res => {
+            dispatch(changeLoading({
+                open: false
+            }))
+            if (typeof res !== 'undefined') {
+                dispatch(indexResponse(res.data))
+            }
+        })
+}
+
+
+export const model = (vehicle_type, vehicle_brand) => dispatch => {
+    dispatch(changeLoading({
+        open: true
+    }))
+
+    return HttpAuth.get(`vehicles/${vehicle_type}/${vehicle_brand}/model`)
+        .then(res => {
+            dispatch(changeLoading({
+                open: false
+            }))
+            if (typeof res !== 'undefined') {
+                dispatch(indexResponse(res.data))
+            }
+        })
+}
+
+export const version = (vehicle_brand, vehicle_model) => dispatch => {
+    dispatch(changeLoading({
+        open: true
+    }))
+
+    return HttpAuth.get(`vehicles/${vehicle_brand}/${vehicle_model}/version`)
+        .then(res => {
+            dispatch(changeLoading({
+                open: false
+            }))
+            if (typeof res !== 'undefined') {
+                dispatch(indexResponse(res.data))
+            }
+        })
+}
+
+export const cep = (zipCode) => dispatch => {
+    if (zipCode.length > 8) {
+        return HttpAuth.post('webservice/cep', {
+            cep: zipCode
+        }).then(res => typeof res != 'undefined' && dispatch(change(res.data)))
+    }
+}
+
