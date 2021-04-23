@@ -1,4 +1,4 @@
-import { CircularProgress, InputAdornment, MenuItem, Select, TextField } from '@material-ui/core';
+import { Checkbox, CircularProgress, FormControlLabel, InputAdornment, MenuItem, Select, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { brand, cep, change, model, show, store, version } from '../../store/actions/vehicles.action';
@@ -162,7 +162,7 @@ export default function VehicleEdit(props) {
                                     <label className="label-custom">CATEGORIA</label>
                                     <Select
                                         error={data.error.vehicle_type && true}
-                                        value={data.vehicle.vehicle_type || 0}
+                                        value={data.vehicle.vehicle_type || ''}
                                         onChange={e => {
                                             dispatch(change({
                                                 vehicle_type: e.target.value,
@@ -199,7 +199,7 @@ export default function VehicleEdit(props) {
                                     <label className="label-custom">MARCAS</label>
                                     <Select
                                         error={data.error.vehicle_brand && true}
-                                        value={data.vehicle.vehicle_brand || 0}
+                                        value={data.vehicle.vehicle_brand || ''}
                                         onChange={e => {
                                             dispatch(change({
                                                 vehicle_brand: e.target.value,
@@ -234,7 +234,7 @@ export default function VehicleEdit(props) {
                                         <label className="label-custom">MODELO</label>
                                         <Select
                                             error={data.error.vehicle_model && true}
-                                            value={data.vehicle.vehicle_model || 0}
+                                            value={data.vehicle.vehicle_model || ''}
                                             onChange={e => {
                                                 dispatch(change({
                                                     vehicle_model: e.target.value,
@@ -261,7 +261,7 @@ export default function VehicleEdit(props) {
                                         <label className="label-custom">ANO DO MODELO</label>
                                         <Select
                                             error={data.error.vehicle_regdate && true}
-                                            value={data.vehicle.vehicle_regdate || 0}
+                                            value={data.vehicle.vehicle_regdate || ''}
                                             onChange={e => {
                                                 dispatch(change({ vehicle_regdate: e.target.value }))
                                                 if (data.error.vehicle_regdate) {
@@ -286,7 +286,7 @@ export default function VehicleEdit(props) {
                                     <label className="label-custom">VERSÃO</label>
                                     <Select
                                         error={data.error.vehicle_version && true}
-                                        value={data.vehicle.vehicle_version || 0}
+                                        value={data.vehicle.vehicle_version || ''}
                                         onChange={e => {
                                             dispatch(change({ vehicle_version: e.target.value }))
                                             if (data.error.vehicle_version) {
@@ -320,7 +320,7 @@ export default function VehicleEdit(props) {
                                             <div className="col-md-6 form-group">
                                                 <label className="label-custom">CÂMBIO</label>
                                                 <Select
-                                                    value={data.vehicle.vehicle_gearbox || 0}
+                                                    value={data.vehicle.vehicle_gearbox || ''}
                                                     onChange={e => dispatch(change({ vehicle_gearbox: e.target.value }))}
                                                 >
                                                     {data.gearbox.map(item => (
@@ -332,7 +332,7 @@ export default function VehicleEdit(props) {
                                             <div className="col-md-6 form-group">
                                                 <label className="label-custom">COMBUSTÍVEL</label>
                                                 <Select
-                                                    value={data.vehicle.vehicle_fuel || 0}
+                                                    value={data.vehicle.vehicle_fuel || ''}
                                                     onChange={e => dispatch(change({ vehicle_fuel: e.target.value }))}
                                                 >
                                                     {data.fuel.map(item => (
@@ -344,7 +344,7 @@ export default function VehicleEdit(props) {
                                             <div className="col-md-6 form-group">
                                                 <label className="label-custom">DIREÇÃO</label>
                                                 <Select
-                                                    value={data.vehicle.vehicle_steering || 0}
+                                                    value={data.vehicle.vehicle_steering || ''}
                                                     onChange={e => dispatch(change({ vehicle_steering: e.target.value }))}
                                                 >
                                                     {data.car_steering.map(item => (
@@ -356,7 +356,7 @@ export default function VehicleEdit(props) {
                                             <div className="col-md-6 form-group">
                                                 <label className="label-custom">POTÊNCIA DO MOTOR</label>
                                                 <Select
-                                                    value={data.vehicle.vehicle_motorpower || 0}
+                                                    value={data.vehicle.vehicle_motorpower || ''}
                                                     onChange={e => dispatch(change({ vehicle_motorpower: e.target.value }))}
                                                 >
                                                     {data.motorpower.map(item => (
@@ -368,7 +368,7 @@ export default function VehicleEdit(props) {
                                             <div className="col-md-6 form-group">
                                                 <label className="label-custom">PORTAS</label>
                                                 <Select
-                                                    value={data.vehicle.vehicle_doors || 0}
+                                                    value={data.vehicle.vehicle_doors || ''}
                                                     onChange={e => dispatch(change({ vehicle_doors: e.target.value }))}
                                                 >
                                                     {data.doors.map(item => (
@@ -387,7 +387,7 @@ export default function VehicleEdit(props) {
                                         <div className="col-md-6 form-group">
                                             <label className="label-custom">CILINDRADAS</label>
                                             <Select
-                                                value={data.vehicle.vehicle_cubiccms || 0}
+                                                value={data.vehicle.vehicle_cubiccms || ''}
                                                 onChange={e => dispatch(change({ vehicle_cubiccms: e.target.value }))}
                                             >
                                                 {data.cubiccms.map(item => (
@@ -403,7 +403,7 @@ export default function VehicleEdit(props) {
                                     <div className="col-md-6 form-group">
                                         <label className="label-custom">COR</label>
                                         <Select
-                                            value={data.vehicle.vehicle_color || 0}
+                                            value={data.vehicle.vehicle_color || ''}
                                             onChange={e => dispatch(change({ vehicle_color: e.target.value }))}
                                         >
                                             {data.carcolor.map(item => (
@@ -424,6 +424,122 @@ export default function VehicleEdit(props) {
                                         />
                                     </div>
 
+                                </div>
+                            </div>
+
+                            {(data.vehicle.vehicle_type) &&
+                                <>
+                                    <h3 className="font-weight-normal mt-4 mb-4">Itens e Opcionais</h3>
+                                    <div className="card card-body">
+                                        <div className="row">
+                                            {data.features.map(item => (item.vehicle_type_id === data.vehicle.vehicle_type) && (
+                                                <div key={item.id} className="col-md-6">
+                                                    <FormControlLabel
+                                                        control={
+                                                            <Checkbox
+                                                                checked={data.vehicle.vehicle_features[item.value] ? true : false}
+                                                                onChange={() => {
+                                                                    let checked = data.vehicle.vehicle_features[item.value] ?
+                                                                        delete data.vehicle.vehicle_features[item.value] :
+                                                                        { [item.value]: item }
+
+                                                                    dispatch(change({
+                                                                        vehicle_features: {
+                                                                            ...data.vehicle.vehicle_features,
+                                                                            ...checked
+                                                                        }
+                                                                    }))
+                                                                }}
+
+                                                            />
+                                                        }
+                                                        label={item.label}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                </>
+                            }
+                            <h3 className="font-weight-normal mt-4 mb-4">Financeiro</h3>
+                            <div className="card card-body">
+                                <div className="form-group">
+                                    <label className="label-custom">Estado Financeiro</label>
+
+                                    <div className="row">
+                                        {data.financial.map(item => (
+                                            <div key={item.id} className="col-md-6">
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            checked={data.vehicle.vehicle_financial[item.value] ? true : false}
+                                                            onChange={() => {
+                                                                let checked = data.vehicle.vehicle_financial[item.value] ?
+                                                                    delete data.vehicle.vehicle_financial[item.value] :
+                                                                    { [item.value]: item }
+
+                                                                dispatch(change({
+                                                                    vehicle_financial: {
+                                                                        ...data.vehicle.vehicle_financial,
+                                                                        ...checked
+                                                                    }
+                                                                }))
+                                                            }}
+
+                                                        />
+                                                    }
+                                                    label={item.label}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-6 form-group">
+                                        <label className="label-custom">PREÇO</label>
+                                        <TextField
+                                            type="tel"
+                                            name="R$ "
+                                            InputProps={{
+                                                inputComponent: NumberFormatCustom,
+                                                value: data.vehicle.vehicle_price || '',
+                                                onChange: text => {
+                                                    dispatch(change({ vehicle_price: text.target.value }))
+                                                    if (data.error.vehicle_price) {
+                                                        delete data.error.vehicle_price
+                                                    }
+                                                }
+                                            }}
+                                        />
+                                        {(data.error.vehicle_price) &&
+                                            <strong className="text-danger">{data.error.vehicle_price[0]}</strong>
+                                        }
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <h3 className="font-weight-normal mt-4 mb-4">Descrição do anúncio</h3>
+                            <div className="card card-body">
+                                <div className="form-group">
+                                    <label className="label-custom">TÍTULO</label>
+                                    <TextField
+                                        value={data.vehicle.title || ''}
+                                        onChange={text => dispatch(change({ title: text.target.value }))}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label className="label-custom">DESCRICAO</label>
+                                    <TextField
+                                        multiline
+                                        rows="5"
+                                        rowsMax="5"
+                                        value={data.vehicle.description || ''}
+                                        onChange={text => dispatch(change({ description: text.target.value }))}
+                                    />
                                 </div>
                             </div>
 
