@@ -1,24 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { FaAngleDown, FaAngleUp, FaCar, FaCreditCard, FaLaptop, FaSignOutAlt, FaUsers, FaWhatsapp } from 'react-icons/fa'
-import { AppBar, Collapse, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText, MenuItem, MenuList, Toolbar, Typography } from '@material-ui/core'
+import { MenuList, MenuItem, AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, Collapse } from '@material-ui/core'
+import { FaCar, FaUsers, FaLaptop, FaCreditCard, FaWhatsapp, FaSignOutAlt, FaAngleUp, FaAngleDown } from 'react-icons/fa'
 import { MdMenu } from 'react-icons/md'
 
 export default function Header(props) {
-
-    const [state, setState] = useState({
+    const [state, setState] = React.useState({
         open: false
-    });
+    })
 
-    const [collapse, setCollapse] = useState({
+    const [collapse, setCollapse] = React.useState({
         site: false,
         financeiro: false
-    });
+    })
 
     return (
         <>
             {(window.innerWidth < 577) ?
-
                 <AppBar position="fixed">
                     <Toolbar>
                         <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setState({ open: true })}>
@@ -27,115 +25,112 @@ export default function Header(props) {
                         <Typography variant="h6">
                             {props.title}
                         </Typography>
+                        {props.button}
                     </Toolbar>
                 </AppBar>
-
                 :
-
                 <nav className="header navbar navbar-expand-lg navbar-light bg-white p-0">
                     <div className="container">
                         <Link className="navbar-brand" to="/">
                             <img src="/logo.png" alt="CAR CRM" height="40" />
                         </Link>
 
-
                         <ul className="navbar-nav">
                             <li className="nav-item">
                                 <Link className="nav-link" to="/vehicles">
-                                    <FaCar className="icon-lg mr-2" size={22} /> Veiculos
-                                </Link>
+                                    <FaCar className="icon-lg mr-2" /> Veiculos
+                            </Link>
                             </li>
+
                             <li className="nav-item">
                                 <button className="nav-link bg-white" to="/vehicles">
-                                    <FaUsers className="icon-lg mr-2" size={22} /> Proprietários
-                                </button>
+                                    <FaUsers className="icon-lg mr-2" /> Proprietários
+                            </button>
                             </li>
+
                             <li className="nav-item dropdown">
                                 <Link className="nav-link dropdown-toggle" to="#" data-toggle="dropdown">
-                                    <FaLaptop className="icon-lg mr-2" size={22} /> Site
-                                </Link>
-
+                                    <FaLaptop className="icon-lg mr-2" /> Site
+                            </Link>
                                 <MenuList className="dropdown-menu">
                                     <MenuItem className="dropdown-item">
                                         Otimização para o Google
-                                    </MenuItem>
+                                </MenuItem>
                                     <MenuItem className="dropdown-item">
                                         Unidades e Telefones
-                                    </MenuItem>
+                                </MenuItem>
                                     <MenuItem className="dropdown-item">
                                         Minha Logo
-                                    </MenuItem>
+                                </MenuItem>
                                     <MenuItem className="dropdown-item">
                                         Dominio
-                                    </MenuItem>
+                                </MenuItem>
                                     <MenuItem className="dropdown-item">
                                         Configurações
-                                    </MenuItem>
+                                </MenuItem>
                                 </MenuList>
                             </li>
+
                             <li className="nav-item dropdown">
                                 <Link className="nav-link dropdown-toggle" to="#" data-toggle="dropdown">
-                                    <FaCreditCard className="icon-lg mr-2" size={22} /> Financeiro
-                                </Link>
-
+                                    <FaCreditCard className="icon-lg mr-2" /> Financeiro
+                            </Link>
                                 <MenuList className="dropdown-menu">
                                     <MenuItem className="dropdown-item">
                                         Meu Plano
-                                    </MenuItem>
+                                </MenuItem>
                                     <MenuItem className="dropdown-item">
                                         Minhas Transações
-                                    </MenuItem>
+                                </MenuItem>
                                 </MenuList>
                             </li>
 
                             <li className="nav-item">
-                                <Link className="nav-link" to="/vehicles">
-                                    <FaWhatsapp className="icon-lg mr-2" size={22} /> Ajuda
-                                </Link>
+                                <Link className="nav-link" to="/">
+                                    <FaWhatsapp className="icon-lg mr-2" /> Ajuda
+                            </Link>
                             </li>
 
                             <li className="nav-item">
-                                <Link className="nav-link" to="/vehicles">
-                                    <FaSignOutAlt className="icon-lg mr-2" size={22} /> Sair
-                                </Link>
+                                <Link className="nav-link" to="/">
+                                    <FaSignOutAlt className="icon-lg mr-2" /> Sair
+                            </Link>
                             </li>
-
                         </ul>
                     </div>
                 </nav>
-
             }
 
             <Drawer anchor="left" open={state.open} onClose={() => setState({ open: false })}>
                 <div style={{ width: 320, maxWidth: window.innerWidth - 70 }}>
                     <List component="nav" className="menu-mobile">
                         <ListItem>
-                            <img className="img-fluid logo-mobile" src="/logo.png" alt="CAR CRM" height="40" />
+                            <img className="img-fluid logo-mobile" src="/logo.png" alt="CAR CRM" height="50" />
                         </ListItem>
 
                         <ListItem>
-                            teste@gmail.com
-                        </ListItem>
+                            test@gmail.com
+                    </ListItem>
 
                         <Divider className="mt-2 mb-3" />
 
                         <ListItem>
                             <ListItemIcon>
-                                <FaCar size={22} color="#444" />
+                                <FaCar />
                             </ListItemIcon>
                             <ListItemText primary="Veiculos" />
                         </ListItem>
 
                         <ListItem>
                             <ListItemIcon>
-                                <FaUsers size={22} color="#444" />
+                                <FaUsers />
                             </ListItemIcon>
                             <ListItemText primary="Proprietários" />
                         </ListItem>
 
-                        <ListItem button onClick={() => setCollapse({ ...collapse, site: !collapse.site })}>
+                        <ListItem button onClick={() => setCollapse({ site: (collapse.site) ? false : true })}>
                             <ListItemIcon>
-                                <FaLaptop size={22} color="#444" />
+                                <FaLaptop />
                             </ListItemIcon>
                             <ListItemText primary="Site" />
                             {(collapse.site) ? <FaAngleUp /> : <FaAngleDown />}
@@ -161,11 +156,11 @@ export default function Header(props) {
                             </List>
                         </Collapse>
 
-                        <Divider className="mt-2 mb-3" />
+                        <Divider className="mt-2 mb-2" />
 
-                        <ListItem button onClick={() => setCollapse({ ...collapse, financeiro: !collapse.financeiro })}>
+                        <ListItem button onClick={() => setCollapse({ financeiro: (collapse.financeiro) ? false : true })}>
                             <ListItemIcon>
-                                <FaCreditCard size={22} color="#444" />
+                                <FaCreditCard />
                             </ListItemIcon>
                             <ListItemText primary="Financeiro" />
                             {(collapse.financeiro) ? <FaAngleUp /> : <FaAngleDown />}
@@ -182,27 +177,24 @@ export default function Header(props) {
                             </List>
                         </Collapse>
 
-
                         <ListItem>
                             <ListItemIcon>
-                                <FaWhatsapp size={22} color="#444" />
+                                <FaWhatsapp />
                             </ListItemIcon>
                             <ListItemText primary="Ajuda" />
                         </ListItem>
 
-                        <Divider className="mt-2 mb-3" />
+                        <Divider className="mt-2 mb-2" />
 
                         <ListItem>
                             <ListItemIcon>
-                                <FaSignOutAlt size={22} color="#444" />
+                                <FaSignOutAlt />
                             </ListItemIcon>
                             <ListItemText primary="Sair" />
                         </ListItem>
-
                     </List>
                 </div>
             </Drawer>
-
         </>
     )
 }
