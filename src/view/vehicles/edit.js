@@ -1,10 +1,11 @@
 import { Checkbox, CircularProgress, FormControlLabel, InputAdornment, MenuItem, Select, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { brand, cep, change, model, show, store, version } from '../../store/actions/vehicles.action';
+import { brand, cep, change, deletePhoto, model, reorderPhoto, show, store, uploadPhoto, version } from '../../store/actions/vehicles.action';
 import Header from '../header';
 import MaskedInput from 'react-text-mask';
 import NumberFormat from 'react-number-format';
+import ArrayMove from 'array-move';
 
 const TextMaskCustom = (props) => {
 
@@ -77,6 +78,28 @@ export default function VehicleEdit(props) {
                 }
             })
         }
+    }
+
+    const handleUpload = (event) => {
+        [...event.target.value].map(img => {
+            const body = new FormData();
+            body.append('file', img)
+            body.append('id', data.vehicle.id)
+            return dispatch(uploadPhoto(body));
+        })
+
+        if (data.error.photos && delete data.error.photos);
+    }
+
+    const _deletePhoto = (id) => {
+        setState({ isDeleted: id })
+        dispatch(deletePhoto(id)).then(res => res && setState({ isDeleted: null }))
+    }
+
+    const onSortEnd = ({ oldIndex, newIndex }) => {
+        let items = ArrayMove(data.vehicle.vehicle_photos, oldIndex, newIndex);
+        let order = items.map(({ id }) => id);
+        dispatch(reorderPhoto({ order }, items))
     }
 
     return (

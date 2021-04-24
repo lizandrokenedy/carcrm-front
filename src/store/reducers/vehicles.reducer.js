@@ -1,3 +1,4 @@
+import { act } from "react-dom/test-utils"
 import { actionTypes } from "../actions/vehicles.action"
 
 const initialState = {
@@ -8,6 +9,7 @@ const initialState = {
     vehicle_brand: [],
     vehicle_model: [],
     vehicle_version: [],
+    upload_photo: false,
     success: false,
     error: {}
 }
@@ -36,6 +38,35 @@ const vehiclesReducer = (state = initialState, { type, payload, isLoadMore }) =>
                 vehicle: {
                     ...state.vehicle,
                     ...payload
+                }
+            }
+
+        case actionTypes.UPLOAD_PHOTO:
+            return {
+                ...state,
+                vehicle: {
+                    ...state.vehicle,
+                    vehicle_photos: [
+                        ...state.vehicle.vehicle_photos.concat(payload)
+                    ]
+                }
+            }
+
+        case actionTypes.DELETE_PHOTO:
+            return {
+                ...state,
+                vehicle: {
+                    ...state.vehicle,
+                    vehicle_photos: state.vehicle.vehicle_photos.filter(item => item.id !== payload)
+                }
+            }
+
+        case actionTypes.REORDER_PHOTO:
+            return {
+                ...state,
+                vehicle: {
+                    ...state.vehicle,
+                    vehicle_photos: payload
                 }
             }
 
