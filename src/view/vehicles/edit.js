@@ -1,7 +1,7 @@
 import React from 'react'
-import { store, show, change, cep, brand, model, version, uploadPhoto, deletePhoto, reorderPhoto } from '../../store/actions/vehicles.action'
+import { store, show, change, cep, brand, model, version, uploadPhoto, deletePhoto, reorderPhoto, update } from '../../store/actions/vehicles.action'
 import { CircularProgress, TextField, Select, MenuItem, InputAdornment, FormControlLabel, Checkbox, Button } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import Header from '../header'
 import { Confirm } from '../components'
 import MaskedInput from 'react-text-mask'
@@ -95,7 +95,7 @@ export default function VehicleEdit(props) {
         }
 
         index();
-    }, [dispatch, state.vehicle_id])
+    }, [dispatch, state])
 
     const handleUpload = (event) => {
         [...event.target.files].map(img => {
@@ -104,7 +104,7 @@ export default function VehicleEdit(props) {
             body.append('id', data.vehicle.id);
             return dispatch(uploadPhoto(body));
         })
-        if (data.error.photos && delete data.error.photos);
+        if (data.error.vehicle_photos && delete data.error.vehicle_photos);
     }
 
     const _deletePhoto = (id) => {
@@ -133,6 +133,7 @@ export default function VehicleEdit(props) {
 
     return (
         <>
+            {(data.success) && <Redirect to="/vehicles" />}
             <Header title="Veiculos - gestão" button={<Button color="inherit" className="ml-auto">Salvar</Button>} />
 
             <div className="container mt-4 pt-3">
@@ -570,8 +571,8 @@ export default function VehicleEdit(props) {
 
                             <h3 className="font-weight-normal mt-4 mb-4">Fotos</h3>
                             <div className="card card-body mb-5">
-                                {(data.error.photos) &&
-                                    <strong className="text-danger">{data.error.photos[0]}</strong>
+                                {(data.error.vehicle_photos) &&
+                                    <strong className="text-danger">{data.error.vehicle_photos[0]}</strong>
                                 }
 
                                 <SortableList axis="xy" onSortEnd={onSortEnd}>
@@ -667,7 +668,7 @@ export default function VehicleEdit(props) {
                                 <Link to="/vehicles" className="mr-2">
                                     <Button variant="contained" size="large">Voltar</Button>
                                 </Link>
-                                <Button variant="contained" color="primary" size="large">
+                                <Button onClick={() => dispatch(update(data.vehicle))} variant="contained" color="primary" size="large">
                                     <FaSave size="1.5rem" className="mr-3" />
                                     Salvar
                                 </Button>
